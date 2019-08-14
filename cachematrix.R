@@ -24,11 +24,11 @@ cacheSolve <- function(x) {
     # set first cached matrix
     x$set(x$get())
     # solve for the first inverse
-    inverseX=solve(x$get())
+    inverseX <- solve(x$get())
     # cache the first inverse
     x$setInv(inverseX)
     # return the first inverse
-    invX=x$getInvX()}
+    invX <- x$getInvX()}
     
   # if matrix does not change and inv is not null
   else {
@@ -41,11 +41,11 @@ cacheSolve <- function(x) {
         # cache the new matrix for subsequent comparison 
         x$set(x$get())
         # solve for the new inverse
-        inverseX=solve(x$get())
+        inverseX <- solve(x$get())
         # cache the new inverse
         x$setInv(inverseX)
         # return the new inverse
-        invX=x$getInvX()
+        invX <- x$getInvX()
     }}
   invX
 }
