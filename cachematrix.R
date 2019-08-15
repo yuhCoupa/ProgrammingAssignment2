@@ -22,7 +22,7 @@ rm(list=ls())
 # this function calculates the inverse of an invertible matrix
 makeCacheMatrix <- function(x = diag(2)) {
   invX <- NULL
-  # this enclosed function caches the input matrix for comparison later
+  # this enclosed function reset matrix and clear cache
   set <- function(y){
     x <<- y
     invX <<- NULL
@@ -40,14 +40,14 @@ makeCacheMatrix <- function(x = diag(2)) {
 }
 
 # this function gets the inverted matrix
-cacheSolve <- function(x) {
+cacheSolve <- function(x,...) {
   invX <- x$getInvX()
   # if invX is null, set the cached matrix equal to the input matrix and calculate invX
   if(is.null(invX)){
     # get the data
     data <- x$get()
     # solve for the inverse
-    inverseX <- solve(x$get())
+    inverseX <- solve(x$get(),...)
     # cache the inverse
     x$setInv(inverseX)
     # return the inverse
