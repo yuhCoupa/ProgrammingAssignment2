@@ -1,3 +1,21 @@
+#############
+### usage ###
+#############
+
+## pass in a new matrix m1
+# matrixObj <- makeCacheMatrix(m1)
+
+## get the inverse
+# inv1 <- cacheSolve(matrixObj)
+
+## when cacheSolve(matrixObj) is called again, the cached inv1 is returned
+
+## when a new m2's inverse needs to be computed, set the new matrix and clear the cache
+# matrixObj$set(m2)
+# inv2 <- cacheSolve(matrixObj)
+
+
+
 # clear global env
 rm(list=ls())
 
@@ -6,14 +24,12 @@ makeCacheMatrix <- function(x = diag(2)) {
   invX <- NULL
   # this enclosed function caches the input matrix for comparison later
   set <- function(y){
-    cachedX <<- y
+    x <<- y
     invX <<- NULL
   }
   
   # get the input matrix
   get <- function() x
-  # get the cached matrix from previous input
-  getCachedX <- function() cachedX
   # cache the inverted matrix
   setInvX <- function(inverseX) invX <<- inverseX
   # get the inverted matrix
@@ -28,31 +44,14 @@ cacheSolve <- function(x) {
   invX <- x$getInvX()
   # if invX is null, set the cached matrix equal to the input matrix and calculate invX
   if(is.null(invX)){
-    # set first cached matrix
-    x$set(x$get())
-    # solve for the first inverse
+    # get the data
+    data <- x$get()
+    # solve for the inverse
     inverseX <- solve(x$get())
-    # cache the first inverse
+    # cache the inverse
     x$setInv(inverseX)
-    # return the first inverse
-    invX <- x$getInvX()}
-    
-  # if matrix does not change and inv is not null
-  else {
-    if((x$getCachedX()==x$get())) {
-    message("getting cached data")
-    return(invX)
-    }
-    # if input matrix has changed
-    else{
-        # cache the new matrix for subsequent comparison 
-        x$set(x$get())
-        # solve for the new inverse
-        inverseX <- solve(x$get())
-        # cache the new inverse
-        x$setInv(inverseX)
-        # return the new inverse
-        invX <- x$getInvX()
-    }}
+    # return the inverse
+    invX <- inverseX}
+  
   invX
 }
